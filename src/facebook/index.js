@@ -13,6 +13,7 @@ module.exports = function (context, req) {
     }
   }
   else if (req.method === "POST") {
+	  context.log('HTTP Post triggered...');
 	let entries = req.body.entry;
 	// Old expression that was converted to be more dynamic:  /(#hfm)($|[\s\n.,]+)/
     let hfmRx = new RegExp(escapeRegex("/(#" + process.env.HASHTAG + ")($|[\s\n.,]+)/"), "igm");
@@ -20,6 +21,8 @@ module.exports = function (context, req) {
     if (entries) {
       entries.forEach(function (entry) {
         entry.changes.forEach(function (change) {
+			context.log('Change Field: ' + change.field);
+			context.log('Change Value: ' + change.value);
           if (change.field === "status") {
             if (change.value.match(hfmRx)) {
               var data = {
