@@ -17,7 +17,7 @@ module.exports = function (context, req) {
 	  context.log('Expression:' + "/(#" + process.env.HASHTAG + ")($|[\s\n.,]+)/");
 	let entries = req.body.entry;
 	// Old expression that was converted to be more dynamic:  /(#hfm)($|[\s\n.,]+)/
-    let hfmRx = new RegExp("/(#" + process.env.HASHTAG + ")($|[\\s\\n.,]+)/", "igm");
+    let hfmRx = new RegExp("(#" + process.env.HASHTAG + ")($|[\\s\\n.,]+)", "igm");
 
     if (entries) {
       entries.forEach(function (entry) {
