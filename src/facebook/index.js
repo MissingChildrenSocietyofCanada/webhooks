@@ -21,8 +21,11 @@ module.exports = function (context, req) {
 		let hfmRx = new RegExp("(#" + process.env.HASHTAG + ")", "igm");
 
 		if (entries) {
+			context.log('Has entries...');
 			entries.forEach(function (entry) {
+				context.log('Looping through changes in each entry...');
 				entry.changes.forEach(function (change) {
+					context.log('Checking change field: ' + change.field);
 					if (change.field === "status") {
 						if (change.value.match(hfmRx)) {
 							context.log('HFM Hashtag match found in: ' + change.value);
