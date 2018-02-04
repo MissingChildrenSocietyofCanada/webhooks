@@ -13,8 +13,9 @@ module.exports = function (context, req) {
     }
   }
   else if (req.method === "POST") {
-    let entries = req.body.entry;
-    let hfmRx = new RegExp(/(#hfm)($|[\s\n.,]+)/, "igm");
+	let entries = req.body.entry;
+	// Old expression that was converted to be more dynamic:  /(#hfm)($|[\s\n.,]+)/
+    let hfmRx = new RegExp(escapeRegex("/(#" + process.env.HASHTAG + ")($|[\s\n.,]+)/"), "igm");
 
     if (entries) {
       entries.forEach(function (entry) {
@@ -39,3 +40,7 @@ module.exports = function (context, req) {
     context.res.sendStatus(200);
   };
 };
+
+function escapeRegex(value) {
+    return value.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
+}
