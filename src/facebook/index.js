@@ -14,6 +14,7 @@ module.exports = function (context, req) {
   }
   else if (req.method === "POST") {
 	  context.log('HTTP Post triggered...');
+	  context.log('Expression:' + escapeRegex("/(#" + process.env.HASHTAG + ")($|[\s\n.,]+)/"));
 	let entries = req.body.entry;
 	// Old expression that was converted to be more dynamic:  /(#hfm)($|[\s\n.,]+)/
     let hfmRx = new RegExp(escapeRegex("/(#" + process.env.HASHTAG + ")($|[\s\n.,]+)/"), "igm");
@@ -25,6 +26,7 @@ module.exports = function (context, req) {
 			context.log('Change Value: ' + change.value);
           if (change.field === "status") {
             if (change.value.match(hfmRx)) {
+				context.log('HFM Hashtag match found...');
               var data = {
                 platform: 'facebook',
                 userid: entry.id,
